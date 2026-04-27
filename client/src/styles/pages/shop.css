@@ -184,6 +184,18 @@
             width: 100%;
         }
     }
+
+    @media screen and (min-width: 768px) {
+        .filter-title {
+            font-size: 1.2rem;
+        }
+        .filter-subtitle {
+            font-size: 0.95rem;
+        }
+        .filter {
+            font-size: 0.85rem;
+        }
+    }
     
     @media (max-width: 576px) {
         .shop-container {
