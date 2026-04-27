@@ -291,6 +291,164 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   themesColors();
+
+  // --------------------- AI Chatbot Widget ---------------------
+  function initAIChatbot() {
+    const chatbotBtn = document.createElement("div");
+    chatbotBtn.id = "ai-chatbot-btn";
+    chatbotBtn.innerHTML = '<i class="fas fa-comment-dots"></i>';
+    chatbotBtn.style.cssText = `
+      position: fixed; 
+      bottom: 2rem; 
+      right: 2rem; 
+      width: 60px; 
+      height: 60px; 
+      background-color: var(--first-color); 
+      color: white; 
+      border-radius: 50%; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      font-size: 1.8rem; 
+      cursor: pointer; 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3); 
+      z-index: 10000; 
+      transition: 0.3s;
+    `;
+
+    const chatbotWindow = document.createElement("div");
+    chatbotWindow.id = "ai-chatbot-window";
+    chatbotWindow.style.cssText = `
+      display: none; 
+      flex-direction: column; 
+      position: fixed; 
+      bottom: 6.5rem; 
+      right: 2rem; 
+      width: 350px; 
+      height: 500px; 
+      background-color: var(--con-color); 
+      border-radius: 1rem; 
+      box-shadow: 0 8px 30px var(--shadow); 
+      border: 1px solid var(--body-color); 
+      z-index: 10000; 
+      overflow: hidden;
+    `;
+    chatbotWindow.innerHTML = `
+      <div style="background-color: var(--first-color); color: white; padding: 1.2rem; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <img src="../../public/images/logos/logo-red.png" style="width: 25px; height: 25px; border-radius: 50%; background: white;" onerror="this.style.display='none'" />
+          <span style="font-weight: bold;">Fashion Freaks AI</span>
+        </div>
+        <i class="fas fa-times" id="ai-chatbot-close" style="cursor: pointer; font-size: 1.2rem;"></i>
+      </div>
+      
+      <div id="ai-chatbot-messages" style="flex: 1; padding: 1.5rem 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; font-size: 0.95rem; color: var(--text-color);">
+        <div style="background: var(--body-color); padding: 0.75rem 1rem; border-radius: 0.5rem; align-self: flex-start; max-width: 80%; box-shadow: 0 2px 5px var(--shadow);">
+          Welcome to Fashion Freaks! How can I assist you with your styles today?
+        </div>
+      </div>
+      
+      <div style="padding: 1rem; background: var(--body-color); display: flex; gap: 0.5rem; border-top: 1px solid var(--con-color);">
+        <input type="text" id="ai-chatbot-input" placeholder="Ask me anything..." style="flex: 1; padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--first-color); background: var(--con-color); color: var(--text-color); outline: none;">
+        <button id="ai-chatbot-send" style="background: var(--first-color); color: white; border: none; padding: 0 1.2rem; border-radius: 0.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    `;
+
+    document.body.appendChild(chatbotBtn);
+    document.body.appendChild(chatbotWindow);
+
+    // Shift other elements UP
+    const switcher = document.querySelector(".style-switcher");
+    const scroller = document.querySelector(".scroll-up, .scrollup, #scroll-up");
+    
+    if (switcher) switcher.style.bottom = "8.5rem";
+    if (scroller) scroller.style.bottom = "13.5rem";
+
+    // Toggle functionality
+    chatbotBtn.addEventListener("click", () => {
+      if (chatbotWindow.style.display === "none") {
+        chatbotWindow.style.display = "flex";
+        chatbotBtn.style.transform = "scale(0.9)";
+      } else {
+        chatbotWindow.style.display = "none";
+        chatbotBtn.style.transform = "scale(1)";
+      }
+    });
+
+    const closeBtn = chatbotWindow.querySelector("#ai-chatbot-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        chatbotWindow.style.display = "none";
+        chatbotBtn.style.transform = "scale(1)";
+      });
+    }
+
+    const inputField = chatbotWindow.querySelector("#ai-chatbot-input");
+    const sendBtn = chatbotWindow.querySelector("#ai-chatbot-send");
+    const msgContainer = chatbotWindow.querySelector("#ai-chatbot-messages");
+
+    let chatHistory = [];
+
+    async function handleSend() {
+      const text = inputField.value.trim();
+      if (!text) return;
+      inputField.value = "";
+
+      // User Message
+      const userDiv = document.createElement("div");
+      userDiv.style.cssText = "background: var(--first-color); color: white; padding: 0.75rem 1rem; border-radius: 0.5rem; align-self: flex-end; max-width: 80%; box-shadow: 0 2px 5px rgba(0,0,0,0.1);";
+      userDiv.innerText = text;
+      msgContainer.appendChild(userDiv);
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+
+      chatHistory.push({ role: "user", content: text });
+
+      // Typing Indicator
+      const typingDiv = document.createElement("div");
+      typingDiv.style.cssText = "background: var(--body-color); padding: 0.75rem 1rem; border-radius: 0.5rem; align-self: flex-start; max-width: 80%; font-style: italic; opacity: 0.8;";
+      typingDiv.innerText = "Thinking...";
+      msgContainer.appendChild(typingDiv);
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+
+      try {
+        const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "http://localhost:5000/api" : "/api";
+        const res = await fetch(`${API_URL}/chatbot`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: chatHistory })
+        });
+        
+        const data = await res.json();
+        typingDiv.remove();
+
+        const aiDiv = document.createElement("div");
+        aiDiv.style.cssText = "background: var(--body-color); padding: 0.75rem 1rem; border-radius: 0.5rem; align-self: flex-start; max-width: 80%; box-shadow: 0 2px 5px var(--shadow);";
+        
+        if (data.response) {
+          aiDiv.innerText = data.response;
+          chatHistory.push({ role: "assistant", content: data.response });
+        } else {
+          aiDiv.innerText = "Sorry, I'm unable to respond right now.";
+        }
+
+        msgContainer.appendChild(aiDiv);
+        msgContainer.scrollTop = msgContainer.scrollHeight;
+      } catch (err) {
+        typingDiv.remove();
+        const errDiv = document.createElement("div");
+        errDiv.style.cssText = "background: var(--body-color); color: #e74c3c; padding: 0.75rem 1rem; border-radius: 0.5rem; align-self: flex-start; max-width: 80%;";
+        errDiv.innerText = "Connection lost. Please retry.";
+        msgContainer.appendChild(errDiv);
+        msgContainer.scrollTop = msgContainer.scrollHeight;
+      }
+    }
+
+    sendBtn.addEventListener("click", handleSend);
+    inputField.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") handleSend();
+    });
+  }
+  initAIChatbot();
 });
 
 

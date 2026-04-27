@@ -32,6 +32,44 @@ connectDB();
 const productRoutes = require("./routes/productRoutes");
 app.use("/api/products", productRoutes);
 
+// Chatbot Secure Route
+app.post("/api/chatbot", async (req, res) => {
+  try {
+    const { messages } = req.body;
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({ error: "Messages array is required" });
+    }
+
+    const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        messages: [
+          {
+            role: "system",
+            content: "You are 'Fashion Freaks AI', the official virtual support for the Fashion Freaks online store. You assist clients with finding items, orders, return workflows, sizing metrics cheerfully."
+          },
+          ...messages
+        ]
+      })
+    });
+
+    const data = await groqResponse.json();
+    if (data.error) {
+      throw new Error(data.error.message);
+    }
+
+    res.json({ response: data.choices[0].message.content });
+  } catch (error) {
+    console.error("Chatbot route error:", error);
+    res.status(500).json({ error: "AI server offline" });
+  }
+});
+
 // 5. Basic Test Route
 app.get("/", (req, res) => {
   res.send("Fashion Freaks API is up and running...");
