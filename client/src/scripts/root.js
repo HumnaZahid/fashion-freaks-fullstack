@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
       font-size: 1.8rem; 
       cursor: pointer; 
       box-shadow: 0 4px 20px rgba(0,0,0,0.3); 
-      z-index: 10000; 
+      z-index: 9000; 
       transition: 0.3s;
     `;
 
@@ -331,7 +331,7 @@ document.addEventListener("DOMContentLoaded", () => {
       border-radius: 1rem; 
       box-shadow: 0 8px 30px var(--shadow); 
       border: 1px solid var(--body-color); 
-      z-index: 10000; 
+      z-index: 9000; 
       overflow: hidden;
     `;
     chatbotWindow.innerHTML = `
