@@ -32,6 +32,24 @@ connectDB();
 const productRoutes = require("./routes/productRoutes");
 app.use("/api/products", productRoutes);
 
+const POLICIES_CONTEXT = `
+FAQS:
+- How long does delivery take? Delivery typically takes between 3 to 5 business days depending on operational limits.
+- Do you offer international shipping? Currently, we deliver exclusively to local territories effectively.
+- What payment methods are supported? We secure card processing operations natively alongside COD verification easily.
+- How do I track updates? Direct account summaries outline delivery schedules natively.
+- Can I cancel an order? Adjustments proceed through direct support pathways cleanly.
+- Is personal data protected? Encrypted pipelines maintain privacy schemas naturally.
+
+PRIVACY POLICY:
+- We collect personal data like Name, Email, Phone, and Address upon checkout safely.
+- We use your details to ship items, process billing parameters, and adapt interface logic securely.
+
+RETURN & EXCHANGE POLICY:
+- Return items within 30 days in their pristine, original tagged condition comfortably.
+- Exchanges support sizing alterations or damaged transit workflows appropriately.
+`;
+
 // Chatbot Secure Route
 app.post("/api/chatbot", async (req, res) => {
   try {
@@ -51,7 +69,11 @@ app.post("/api/chatbot", async (req, res) => {
         messages: [
           {
             role: "system",
-            content: "You are 'Fashion Freaks AI', the official virtual support for the Fashion Freaks online store. You assist clients with finding items, orders, return workflows, sizing metrics cheerfully."
+            content: `You are 'Fashion Freaks AI', the official virtual support for the Fashion Freaks online store. 
+            You assist clients using strictly the following knowledge base policies:
+            ${POLICIES_CONTEXT}
+            
+            Maintain a helpful, concise, and cheerful customer service tone.`
           },
           ...messages
         ]
