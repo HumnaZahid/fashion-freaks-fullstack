@@ -343,15 +343,15 @@ document.addEventListener("DOMContentLoaded", () => {
         <i class="fas fa-times" id="ai-chatbot-close" style="cursor: pointer; font-size: 1.2rem;"></i>
       </div>
       
-      <div id="ai-chatbot-messages" style="flex: 1; padding: 1.5rem 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; font-size: 0.95rem; color: var(--text-color);">
-        <div style="background: var(--body-color); padding: 0.75rem 1rem; border-radius: 0.5rem; align-self: flex-start; max-width: 80%; box-shadow: 0 2px 5px var(--shadow);">
+      <div id="ai-chatbot-messages" style="flex: 1; padding: 1.2rem 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.85rem; color: var(--text-color);">
+        <div style="background: var(--body-color); padding: 0.6rem 0.8rem; border-radius: 0.5rem; align-self: flex-start; max-width: 85%; box-shadow: 0 2px 5px var(--shadow);">
           Welcome to Fashion Freaks! How can I assist you with your styles today?
         </div>
       </div>
       
-      <div style="padding: 1rem; background: var(--body-color); display: flex; gap: 0.5rem; border-top: 1px solid var(--con-color);">
-        <input type="text" id="ai-chatbot-input" placeholder="Ask me anything..." style="flex: 1; padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--first-color); background: var(--con-color); color: var(--text-color); outline: none;">
-        <button id="ai-chatbot-send" style="background: var(--first-color); color: white; border: none; padding: 0 1.2rem; border-radius: 0.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fas fa-paper-plane"></i></button>
+      <div style="padding: 0.8rem; background: var(--body-color); display: flex; gap: 0.5rem; border-top: 1px solid var(--con-color);">
+        <input type="text" id="ai-chatbot-input" placeholder="Ask me anything..." style="flex: 1; padding: 0.6rem; font-size: 0.85rem; border-radius: 0.5rem; border: 1px solid var(--first-color); background: var(--con-color); color: var(--text-color); outline: none;">
+        <button id="ai-chatbot-send" style="background: var(--first-color); color: white; border: none; padding: 0 1rem; border-radius: 0.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fas fa-paper-plane"></i></button>
       </div>
     `;
 
@@ -421,7 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // User Message
       const userDiv = document.createElement("div");
-      userDiv.style.cssText = "background: var(--first-color); color: white; padding: 0.75rem 1rem; border-radius: 0.5rem; align-self: flex-end; max-width: 80%; box-shadow: 0 2px 5px rgba(0,0,0,0.1);";
+      userDiv.style.cssText = "background: var(--first-color); color: white; padding: 0.6rem 0.8rem; border-radius: 0.5rem; align-self: flex-end; max-width: 85%; box-shadow: 0 2px 5px rgba(0,0,0,0.1);";
       userDiv.innerText = text;
       msgContainer.appendChild(userDiv);
       msgContainer.scrollTop = msgContainer.scrollHeight;
@@ -430,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Typing Indicator
       const typingDiv = document.createElement("div");
-      typingDiv.style.cssText = "background: var(--body-color); padding: 0.75rem 1rem; border-radius: 0.5rem; align-self: flex-start; max-width: 80%; font-style: italic; opacity: 0.8;";
+      typingDiv.style.cssText = "background: var(--body-color); padding: 0.6rem 0.8rem; border-radius: 0.5rem; align-self: flex-start; max-width: 85%; font-style: italic; opacity: 0.8;";
       typingDiv.innerText = "Thinking...";
       msgContainer.appendChild(typingDiv);
       msgContainer.scrollTop = msgContainer.scrollHeight;
@@ -447,7 +447,7 @@ document.addEventListener("DOMContentLoaded", () => {
         typingDiv.remove();
 
         const aiDiv = document.createElement("div");
-        aiDiv.style.cssText = "background: var(--body-color); padding: 0.75rem 1rem; border-radius: 0.5rem; align-self: flex-start; max-width: 80%; box-shadow: 0 2px 5px var(--shadow);";
+        aiDiv.style.cssText = "background: var(--body-color); padding: 0.6rem 0.8rem; border-radius: 0.5rem; align-self: flex-start; max-width: 85%; box-shadow: 0 2px 5px var(--shadow);";
         
         if (data.response) {
           aiDiv.innerText = data.response;
@@ -461,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (err) {
         typingDiv.remove();
         const errDiv = document.createElement("div");
-        errDiv.style.cssText = "background: var(--body-color); color: #e74c3c; padding: 0.75rem 1rem; border-radius: 0.5rem; align-self: flex-start; max-width: 80%;";
+        errDiv.style.cssText = "background: var(--body-color); color: #e74c3c; padding: 0.6rem 0.8rem; border-radius: 0.5rem; align-self: flex-start; max-width: 85%;";
         errDiv.innerText = "Connection lost. Please retry.";
         msgContainer.appendChild(errDiv);
         msgContainer.scrollTop = msgContainer.scrollHeight;
