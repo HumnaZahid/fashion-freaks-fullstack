@@ -1392,13 +1392,6 @@
   animation: slide-in-toast 0.3s ease-out forwards;
 }
 
-.notification-toast.success {
-  background: #2ecc71;
-}
-
-.notification-toast.error {
-  background: #e74c3c;
-}
 
 @keyframes slide-in-toast {
   from {
