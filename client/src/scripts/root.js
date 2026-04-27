@@ -325,7 +325,8 @@ document.addEventListener("DOMContentLoaded", () => {
       bottom: 6.5rem; 
       right: 2rem; 
       width: 350px; 
-      height: 500px; 
+      max-height: calc(100vh - 10rem);
+      height: 450px; 
       background-color: var(--con-color); 
       border-radius: 1rem; 
       box-shadow: 0 8px 30px var(--shadow); 
@@ -357,12 +358,29 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(chatbotBtn);
     document.body.appendChild(chatbotWindow);
 
-    // Shift other elements UP
+    // Shift other elements UP and center them with chatbot
     const switcher = document.querySelector(".style-switcher");
     const scroller = document.querySelector(".scroll-up, .scrollup, #scroll-up");
     
-    if (switcher) switcher.style.bottom = "8.5rem";
-    if (scroller) scroller.style.bottom = "13.5rem";
+    if (switcher) {
+      switcher.style.bottom = "8.5rem";
+      const sIcon = switcher.querySelector(".s-icon");
+      if (sIcon) {
+        sIcon.style.right = "auto";
+        sIcon.style.position = "fixed";
+        sIcon.style.bottom = "8.5rem";
+        sIcon.style.right = "calc(2rem + 10px)";
+      }
+    }
+    if (scroller) {
+      scroller.style.bottom = "13.5rem";
+      scroller.style.right = "calc(2rem + 10px)";
+      scroller.style.width = "40px";
+      scroller.style.height = "40px";
+      scroller.style.display = "flex";
+      scroller.style.justifyContent = "center";
+      scroller.style.alignItems = "center";
+    }
 
     // Toggle functionality
     chatbotBtn.addEventListener("click", () => {
