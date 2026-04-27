@@ -366,7 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
       switcher.style.bottom = "8.5rem";
       const sIcon = switcher.querySelector(".s-icon");
       if (sIcon) {
-        sIcon.style.cssText = "";
+        sIcon.style.marginRight = "calc(2rem + 10px)";
       }
     }
     if (scroller) {
