@@ -147,18 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateGallery();
       };
 
-      if (mainDetailsImg) {
-        mainDetailsImg.addEventListener("click", () => {
-          const lightbox = document.querySelector(".lightbox");
-          const lightboxImage = document.querySelector(".lightbox-img");
-          const lightboxCounter = document.querySelector(".caption-counter");
-          if (lightbox && lightboxImage) {
-            lightboxImage.src = product.images[currentImgIdx].url;
-            if (lightboxCounter) lightboxCounter.innerHTML = `${currentImgIdx + 1} of ${product.images.length}`;
-            lightbox.classList.add("open");
-          }
-        });
-      }
+      setupLightbox(product.images);
     }
 
 
@@ -221,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setupLightbox(images) {
-    const productItems = document.querySelectorAll(".product-img");
+    const mainImg = document.getElementById("main-details-img");
     const lightbox = document.querySelector(".lightbox");
     if (!lightbox) return;
     
@@ -231,14 +220,15 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let itemIndex = 0;
 
-    productItems.forEach((item, i) => {
-      item.addEventListener("click", () => {
-        itemIndex = i;
-        lightboxImage.src = images[itemIndex].url;
-        lightboxCounter.innerHTML = `${itemIndex + 1} of ${images.length}`;
+    if (mainImg) {
+      mainImg.style.cursor = "pointer";
+      mainImg.addEventListener("click", () => {
+        itemIndex = currentImgIdx;
+        if (images && images[itemIndex]) lightboxImage.src = images[itemIndex].url;
+        if (lightboxCounter) lightboxCounter.innerHTML = `${itemIndex + 1} of ${images.length}`;
         lightbox.classList.add("open");
       });
-    });
+    }
 
     if (lightboxClose) {
       lightboxClose.addEventListener("click", () => lightbox.classList.remove("open"));
@@ -249,15 +239,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     window.nextItem = () => {
+      if (!images || images.length === 0) return;
       itemIndex = (itemIndex + 1) % images.length;
-      lightboxImage.src = images[itemIndex].url;
-      lightboxCounter.innerHTML = `${itemIndex + 1} of ${images.length}`;
+      if (images[itemIndex]) lightboxImage.src = images[itemIndex].url;
+      if (lightboxCounter) lightboxCounter.innerHTML = `${itemIndex + 1} of ${images.length}`;
     };
 
     window.prevItem = () => {
+      if (!images || images.length === 0) return;
       itemIndex = (itemIndex - 1 + images.length) % images.length;
-      lightboxImage.src = images[itemIndex].url;
-      lightboxCounter.innerHTML = `${itemIndex + 1} of ${images.length}`;
+      if (images[itemIndex]) lightboxImage.src = images[itemIndex].url;
+      if (lightboxCounter) lightboxCounter.innerHTML = `${itemIndex + 1} of ${images.length}`;
     };
   }
 
