@@ -366,10 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
       switcher.style.bottom = "8.5rem";
       const sIcon = switcher.querySelector(".s-icon");
       if (sIcon) {
-        sIcon.style.right = "auto";
-        sIcon.style.position = "fixed";
-        sIcon.style.bottom = "8.5rem";
-        sIcon.style.right = "calc(2rem + 10px)";
+        sIcon.style.cssText = "";
       }
     }
     if (scroller) {
@@ -377,9 +374,19 @@ document.addEventListener("DOMContentLoaded", () => {
       scroller.style.right = "calc(2rem + 10px)";
       scroller.style.width = "40px";
       scroller.style.height = "40px";
-      scroller.style.display = "flex";
+      scroller.style.display = "none";
       scroller.style.justifyContent = "center";
       scroller.style.alignItems = "center";
+      scroller.style.borderRadius = "50%";
+      
+      window.addEventListener("scroll", () => {
+        const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollTotal > 0 && (window.scrollY / scrollTotal) >= 0.6) {
+          scroller.style.display = "flex";
+        } else {
+          scroller.style.display = "none";
+        }
+      });
     }
 
     // Toggle functionality
