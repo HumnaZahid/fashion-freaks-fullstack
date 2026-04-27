@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const compression = require("compression");
 
 // 1. Load Environment Variables
 dotenv.config();
@@ -9,8 +10,9 @@ dotenv.config();
 const app = express();
 
 // 2. Middlewares
-app.use(cors()); // Frontend aur Backend ke darmiyan communication ke liye
-app.use(express.json()); // JSON data handle karne ke liye
+app.use(compression());
+app.use(cors()); 
+app.use(express.json()); 
 
 // 3. MongoDB Connection Logic
 const connectDB = async () => {
