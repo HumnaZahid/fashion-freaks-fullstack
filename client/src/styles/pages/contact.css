@@ -67,13 +67,8 @@
     @media (max-width: 767px) {
         .contact-container {
             grid-template-columns: 1fr;
-            row-gap: 1.5rem;
-        }
-    }
-    
-    @media (max-width:576px) {
-        .contact {
-            width: 95%;
+            row-gap: 2.5rem;
+            padding: 0 1.5rem;
         }
     }
     /* end Contact */

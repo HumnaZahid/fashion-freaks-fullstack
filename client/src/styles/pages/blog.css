@@ -82,4 +82,17 @@
             right: 0;
         }
     }
+    .pagination {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+        margin-top: 2rem;
+        align-items: center;
+    }
+    
+    @media (max-width: 767px) {
+        .pagination {
+            justify-content: center;
+        }
+    }
     /*************** END BLOG  ****************/

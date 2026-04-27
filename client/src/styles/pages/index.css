@@ -124,6 +124,10 @@
             text-align: center;
             gap: 0;
         }
+        .home-buttons {
+            justify-content: center;
+            gap: 1.5rem;
+        }
         .home-subtitle {
             position: absolute;
             top: 15%;
@@ -299,7 +303,7 @@
     
     .steps {
         background-color: var(--con-color);
-        padding: 7rem 2.5rem;
+        padding: 7rem 4.5rem;
         border-radius: 1rem;
         overflow: hidden;
     }
@@ -346,6 +350,11 @@
     }
     
     @media (max-width: 767px) {
+        .steps {
+            padding: 4rem 2rem;
+            margin: 0 1.5rem;
+            width: auto;
+        }
         .steps-container {
             grid-template-columns: repeat(1, 1fr);
         }

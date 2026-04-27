@@ -676,26 +676,31 @@
             flex-direction: column;
             top: -500px;
             position: absolute;
-            background-color: white;
+            background-color: var(--body-color);
             width: 100%;
             left: 0;
-            box-shadow: 0 1px 4px var(--shadow);
+            box-shadow: 0 4px 12px var(--shadow);
+            padding: 1.5rem 0;
+            gap: 0.5rem;
         }
         header .nav-items .item {
-            padding: 20px 30px;
-            background-color: white;
-            text-align: center;
+            padding: 10px 30px;
+            background-color: transparent;
+            text-align: left;
         }
         header .nav-items .item .nav-link {
-            font-weight: var(--font-bold);
-        }
-        .nav-toggle {
-            display: block
+            font-weight: var(--font-med);
+            font-size: 1.1rem;
+            color: var(--title-color);
+            transition: 0.3s ease;
         }
         header .nav-items .item .nav-link:hover {
-            background-color: var(--con-color);
             color: var(--first-color);
-            padding: 0;
+            padding-left: 5px;
+            background-color: transparent;
+        }
+        .nav-toggle {
+            display: block;
         }
     }
     
