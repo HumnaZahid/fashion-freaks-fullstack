@@ -176,6 +176,7 @@
             grid-template-columns: 1fr;
             justify-content: center;
             gap: 2rem;
+            padding: 0 1.5rem;
         }
         .pagination {
             justify-content: center;

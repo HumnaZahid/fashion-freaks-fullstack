@@ -89,6 +89,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (product.images && product.images.length > 0) {
       if (mainDetailsImg) mainDetailsImg.src = product.images[0].url;
       
+      const prevBtn = document.querySelector(".gallery-nav-btn.prev");
+      const nextBtn = document.querySelector(".gallery-nav-btn.next");
+      if (product.images.length <= 1) {
+        if (prevBtn) prevBtn.style.display = "none";
+        if (nextBtn) nextBtn.style.display = "none";
+        if (thumbsContainer) thumbsContainer.style.display = "none";
+      } else {
+        if (prevBtn) prevBtn.style.display = "flex";
+        if (nextBtn) nextBtn.style.display = "flex";
+        if (thumbsContainer) thumbsContainer.style.display = "flex";
+      }
+
       if (primaryTag) {
         if (product.condition === "New" || product.condition === "Sale") {
           primaryTag.innerText = product.condition;

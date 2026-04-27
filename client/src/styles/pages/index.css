@@ -303,7 +303,7 @@
     
     .steps {
         background-color: var(--con-color);
-        padding: 7rem 4.5rem;
+        padding: 7rem 6.5rem;
         border-radius: 1rem;
         overflow: hidden;
     }
@@ -312,6 +312,8 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
         padding-top: 1rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
     
     .steps-box {
@@ -351,7 +353,7 @@
     
     @media (max-width: 767px) {
         .steps {
-            padding: 4rem 2rem;
+            padding: 4rem 3rem;
             margin: 0 1.5rem;
             width: auto;
         }
